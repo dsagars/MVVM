@@ -11,7 +11,7 @@ namespace CompanyMVVM
     [AddINotifyPropertyChangedInterface]
     public class ViewModelBase : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
-        
+        public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };       
     }
+
 }
