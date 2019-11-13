@@ -80,6 +80,7 @@
     <Compile Include="Interfaces\IClosable.cs" />
     <Compile Include="Model\Car.cs" />
     <Compile Include="ViewModel\Command.cs" />
+    <Compile Include="ViewModel\EnterDataViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\CompanyViewModel.cs" />

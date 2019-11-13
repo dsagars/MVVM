@@ -31,8 +31,8 @@ namespace CompanyMVVM
         }
 
         private void CompanyListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            CompanyViewModel vm = this.DataContext as CompanyViewModel;   
+        {        
+            CompanyViewModel vm = this.DataContext as CompanyViewModel;
             vm.DoubleClickCommand.Execute(null);
         }
     }

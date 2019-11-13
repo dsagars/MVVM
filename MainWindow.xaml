@@ -7,15 +7,15 @@
         xmlns:local="clr-namespace:CompanyMVVM"
         mc:Ignorable="d"
         x:Name="MainWindowView"
-        Title="MainWindow" Height="450" Width="950">
+        Title="MainWindow" Height="450" Width="950" WindowStartupLocation="Manual">
     
-    <Grid RenderTransformOrigin="0.491,0.585" Visibility="Visible">
+    <Grid RenderTransformOrigin="0.491,0.585">
         <Grid.RowDefinitions>
             <RowDefinition Height="319" />
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
 
-        <ListView Name="CompanyListView" ItemsSource="{Binding Companies}"  SelectionMode="Single"  IsSynchronizedWithCurrentItem="True" AlternationCount="2">
+        <ListView Name="CompanyListView" ItemsSource="{Binding Companies}" SelectedItem="{Binding SelectedItemOnTheControl}"  IsSynchronizedWithCurrentItem="True" AlternationCount="2">
             <ListView.Resources>
                 <Style TargetType="{x:Type GridViewColumnHeader}">
                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -42,8 +42,8 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id , UpdateSourceTrigger=Explicit}" Width="80"></GridViewColumn>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding CompanyName , UpdateSourceTrigger=Explicit}" Width="200"></GridViewColumn>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id , UpdateSourceTrigger=Explicit , Mode=TwoWay}" Width="80"></GridViewColumn>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding CompanyName , UpdateSourceTrigger=Explicit, Mode=TwoWay}" Width="200"></GridViewColumn>
                     <GridViewColumn Header="Is Main Company" Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -55,26 +55,26 @@
                     <GridViewColumn x:Name="comboColumn" Header="Cars" Width="350">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate >
-                                <ComboBox x:Name="carsCombo" Width="300"  ItemsSource="{Binding Cars, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectedIndex="0"  IsEditable="False" SelectedItem="{Binding CompanyCar, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="CarName" ItemStringFormat="{}{0:CarName} {}{1:MFD} ">
+                                <ComboBox x:Name="carsCombo" Width="300"  ItemsSource="{Binding Cars, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectedIndex="0"  IsEditable="False" SelectedItem="{Binding Car, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="CarName" ItemStringFormat="{}{0:CarName} {}{1:MFD} ">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <Expander>
                                                 <Expander.Header>
                                                     <TextBlock Name="txtBlock">
-                                                <Run Text="{Binding CarName, UpdateSourceTrigger=PropertyChanged }"/>
+                                                <Run Text="{Binding CarName, UpdateSourceTrigger=PropertyChanged , Mode=TwoWay}"/>
                                                 <Run Text="  -  "/>
                                                 <Run Text="{Binding MFD, UpdateSourceTrigger=PropertyChanged}"/>
                                                     </TextBlock>
                                                 </Expander.Header>
                                                 <StackPanel>
                                                     <Label Content="Name :" FontWeight="Bold"/>
-                                                    <TextBlock Text="{Binding CarName , UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <TextBlock Text="{Binding CarName , UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                                                     <Label Content="Color :" FontWeight="Bold"/>
-                                                    <TextBlock Text="{Binding Color , UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <TextBlock Text="{Binding Color , UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                                                     <Label Content="Doors :" FontWeight="Bold"/>
-                                                    <TextBlock Text="{Binding Doors , UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <TextBlock Text="{Binding Doors , UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                                                     <Label Content="Tires :" FontWeight="Bold"/>
-                                                    <TextBlock Text="{Binding Tires , UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <TextBlock Text="{Binding Tires , UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                                                     <Label Content="MFD :" FontWeight="Bold"/>
                                                     <TextBlock Text="{Binding MFD.Date , UpdateSourceTrigger=PropertyChanged}"/>
 

@@ -21,9 +21,9 @@ namespace CompanyMVVM
 
         public CompanyAddress Address { get; set; }
 
-        public List<Car> Cars { get; set; }
+        public IList<Car> Cars { get; set; }
 
-        public Company(int id, string name, bool isMainCompany, CompanyAddress address, List<Car> cars)
+        public Company(int id, string name, bool isMainCompany, CompanyAddress address, IList<Car> cars)
         {
             this.Id = id;
             this.CompanyName = name;
