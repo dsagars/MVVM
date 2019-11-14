@@ -12,15 +12,23 @@ using System.Windows.Input;
 namespace CompanyMVVM
 {
     [AddINotifyPropertyChangedInterface]
-    public class CompanyViewModel : ViewModelBase
+    public class CompanyViewModel : ViewModelBase,INotifyPropertyChanged
     {
         #region Public Properties  
         public ObservableCollection<Company> Companies { get; set; }
         public ObservableCollection<Car> Cars { get; set; }
         public Company SelectedItemOnTheControl { get; set; }
         #endregion
+        //
+        public int IdTextBox { get; set; }
 
+        public string CompanyNameTextBox { get; set; }
 
+        public bool IsMainCompanyCheckBox { get; set; }
+
+        public CompanyAddress AddressTextBox { get; set; }
+        public IList<Car> CarsList { get; set; }
+        //
         #region Commands
         public ICommand CloseCommand { get; private set; }
         public ICommand AddCommand { get; private set; }
@@ -47,10 +55,27 @@ namespace CompanyMVVM
             DoubleClickCommand = new Command(ExecuteDoubleClick, CanDoubleClick);
             
         }
+        public CompanyViewModel(Company company)
+        {
+            IdTextBox = company.Id;
+            CompanyNameTextBox = company.CompanyName;
+            IsMainCompanyCheckBox = company.IsMainCompany;
+            AddressTextBox = company.Address;
+        }
+            
         #endregion
 
 
-        #region CommandImplementation
+
+
+        /// <summary>
+        /// Add Execution
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        /// 
+
+         #region AddCommand
         public event EventHandler CanExecuteChanged
         {
             add
@@ -63,7 +88,7 @@ namespace CompanyMVVM
                 AddCommand.CanExecuteChanged -= value;
             }
         }
-
+        
         private bool CanExecuteAdd(object parameter)
         {
             return true;
@@ -74,6 +99,15 @@ namespace CompanyMVVM
             EnterData enterData = new EnterData();
             enterData.Show();
         }
+        #endregion
+
+
+        /// <summary>
+        /// Double Click Execution
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        #region Double Click  
         private bool CanDoubleClick(object parameter)
         {
             return true;
@@ -82,38 +116,13 @@ namespace CompanyMVVM
         {
             if(SelectedItemOnTheControl != null)
             {
-                Company company = SelectedItemOnTheControl;
-                EnterData enterData = new EnterData(company);
+                
+               // Company company = SelectedItemOnTheControl;
+                EnterData enterData = new EnterData(SelectedItemOnTheControl);  
                 enterData.Show();
             }
         }
-
-
-        Command _saveCommand;
-        public ICommand SaveCommand
-        {
-            get
-            {
-                if (_saveCommand == null)
-                {
-                    _saveCommand = new Command(p => this.ExecuteSave((object)p),
-                     p => this.CanSave(p));
-                }
-                return _saveCommand;
-            }
-        }
-        private bool CanSave(object parameter)
-        {
-            return true;
-        }
-        private void ExecuteSave(object parameter)
-        {
-            
-            EnterDataViewModel model = new EnterDataViewModel(company, Companies);
-            Company company = model.SaveCompany;
-        }
         #endregion
-
     }
 }
     

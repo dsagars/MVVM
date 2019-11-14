@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CompanyMVVM"
         mc:Ignorable="d"
+        
         Title="EnterData" Height="450" Width="800" WindowStartupLocation="Manual">
     <Grid HorizontalAlignment="Right" Width="792" Visibility="Visible">
 
@@ -35,8 +36,8 @@
         <Label Content="Main Company" Grid.Row="0" Grid.Column="2" FontSize="15" FontWeight="Bold"/>
         <Label Content="Cars" Grid.Row="0" Grid.Column="3" FontSize="15" FontWeight="Bold"/>
         <Label Content="Address" Grid.Row="0" Grid.Column="4" FontSize="15" FontWeight="Bold"/>
-        <TextBox  Name="iDAddOrEditTxtBox" Text="{Binding IdTextBox , UpdateSourceTrigger=Explicit}" Margin="10,10,46,341" Grid.Row="1" Grid.Column="0" />
-        <TextBox  Name="companyNameAddOrEditTxtBox" Text="{Binding CompanyNameTextBox ,UpdateSourceTrigger=Explicit}" Margin="10,10,10,341" Grid.Row="1" Grid.Column="1" />
+        <TextBox  Name="iDAddOrEditTxtBox" Text="{Binding IdTextBox, UpdateSourceTrigger=LostFocus}" Margin="10,10,46,341" Grid.Row="1" Grid.Column="0" />
+        <TextBox  Name="companyNameAddOrEditTxtBox" Text="{Binding CompanyNameTextBox ,UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,341" Grid.Row="1" Grid.Column="1" />
         <CheckBox x:Name="isMainCompanyAddOrEditCheckBox" Content="{Binding IsMainCompanyCheckBox}" Grid.ColumnSpan="2" Grid.Column="2" Margin="14,18,184,333" Grid.Row="1" />
         <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Vertical" Height="Auto" Width="Auto" >
             <Label Content="Street :"/>
@@ -63,7 +64,7 @@
 
 
         <Button x:Name="closeButton" Content="Close" Grid.Column="1" Grid.Row="1" Margin="27,276,19,77"  />
-        <Button x:Name="saveButton" Content="Save" Grid.Column="0" Grid.Row="1" Margin="28,276,18,77" Command="{Binding SaveCommand, Mode=TwoWay}" CommandParameter="{Binding}"/>
+        <Button x:Name="saveButton" Content="Save" Grid.Column="0" Grid.Row="1" Margin="28,276,18,77" Command="{Binding SaveCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=txtCarName , Path=Text}"/>
         <Button x:Name="clearButton" Content="Clear" Grid.Column="2" Grid.Row="1" Margin="28,276,18,77" />
 
     </Grid>

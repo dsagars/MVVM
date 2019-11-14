@@ -42,7 +42,7 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id , UpdateSourceTrigger=Explicit , Mode=TwoWay}" Width="80"></GridViewColumn>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id , UpdateSourceTrigger=Explicit, Mode=TwoWay}" Width="80"></GridViewColumn>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding CompanyName , UpdateSourceTrigger=Explicit, Mode=TwoWay}" Width="200"></GridViewColumn>
                     <GridViewColumn Header="Is Main Company" Width="100">
                         <GridViewColumn.CellTemplate>

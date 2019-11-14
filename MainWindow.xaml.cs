@@ -34,6 +34,7 @@ namespace CompanyMVVM
         {        
             CompanyViewModel vm = this.DataContext as CompanyViewModel;
             vm.DoubleClickCommand.Execute(null);
+           
         }
     }
     

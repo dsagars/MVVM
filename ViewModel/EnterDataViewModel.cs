@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -9,9 +11,18 @@ using PropertyChanged;
 namespace CompanyMVVM
 {
     [AddINotifyPropertyChangedInterface]
-    public class EnterDataViewModel : ViewModelBase
+    public class EnterDataViewModel : ViewModelBase, ICommand, INotifyPropertyChanged
     {
+        #region Properties
+        private int id;
+        private string companyName;
+        private bool isMainCompany;
+        private CompanyAddress address;
+        private IList<Car> cars;
+        private ObservableCollection<Company> getCompanies;
+
         public int IdTextBox { get; set; }
+      
         public string CompanyNameTextBox { get; set; }
 
         public bool IsMainCompanyCheckBox { get; set; }
@@ -20,25 +31,18 @@ namespace CompanyMVVM
         public IList<Car> Cars { get; set; }
         public ObservableCollection<Company> GetCompanies { get; set; }
         public Company company { get; set; }
+        public Company SaveCompany { get; set; }
 
-        Command _saveCommand;
-        public ICommand SaveCommand
-        {
-            get
-            {
-                if (_saveCommand == null)
-                {
-                    _saveCommand = new Command(p => this.ExecuteSave((object)p),
-                     p => this.CanSave(p));  
-                }
-                return _saveCommand;
-            }
-        }
+        #endregion
+       
+
+        
+        #region Constructor
 
         public EnterDataViewModel(Company company)
         {
             CompanyViewModel model = new CompanyViewModel();
-            this.GetCompanies = model.Companies;
+               this.GetCompanies = model.Companies;
             
                 //Company company1 = new Company();
                 IdTextBox = company.Id;
@@ -46,38 +50,63 @@ namespace CompanyMVVM
                 IsMainCompanyCheckBox = company.IsMainCompany;
                 Cars = company.Cars;
                 AddressTextBox = company.Address;
-         
+                
+        }
+       
+        public EnterDataViewModel(ObservableCollection<Company> companies)
+        {
+            //Company company = new Company();
+            //company.Id = IdTextBox;
+            //company.CompanyName = CompanyNameTextBox;
+            //company.IsMainCompany = IsMainCompanyCheckBox;
+            //company.Cars = Cars;
+            //company.Address = AddressTextBox;
+            //companies.Add(company);
+            //GetCompanies = companies;
+            companies = GetCompanies;
             
         }
-        public EnterDataViewModel(Company company, ObservableCollection<Company> newCompanyCollection)
-        {
-            SaveCompany.CompanyName = CompanyNameTextBox;
-            SaveCompany.Id = IdTextBox;
-            SaveCompany.IsMainCompany = IsMainCompanyCheckBox;
-            SaveCompany.Address = AddressTextBox;
-            SaveCompany.Cars = Cars;
-            newCompanyCollection.Add(SaveCompany);
-        }
+        #endregion
 
-        private bool CanSave(object parameter)
+
+
+        #region SaveCommand
+
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                SaveCommand.CanExecuteChanged += value;
+            }
+
+            remove
+            {
+                SaveCommand.CanExecuteChanged -= value;
+            }
+        }
+        public ICommand SaveCommand { get; set; }
+
+        public bool CanExecute(object parameter)
         {
             return true;
         }
-        private void ExecuteSave(object parameter)
+        private void CreateSaveCommand()
         {
-            Company company = new Company();
-            company.Id = IdTextBox;
-            company.CompanyName = CompanyNameTextBox;
-            company.IsMainCompany = IsMainCompanyCheckBox;
-            company.Address = AddressTextBox;
-            company.Cars = Cars;
-            GetCompanies.Add(company);
-            
+            SaveCommand = new Command(Execute, CanExecute);
+        }
+        public void Execute(object parameter)
+        {
+            CompanyViewModel test = new CompanyViewModel();
+            test.Companies = GetCompanies;
         }
 
-        public Company SaveCompany { get; set; }
-        
+        #endregion
 
-        
+
+
+
+
+
+
     }
 }

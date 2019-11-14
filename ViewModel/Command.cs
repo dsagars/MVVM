@@ -11,8 +11,8 @@ namespace CompanyMVVM
 {
     public class Command : ICommand
     {
-        private Action<object> executeAction;
-        private Func<object, bool> canExecuteAction;
+        private  Action<object> executeAction;
+        private  Func<object, bool> canExecuteAction;
 
         public Command(Action<object> executeMethod, Func<object, bool> canExecuteMethod)
         {
@@ -29,6 +29,7 @@ namespace CompanyMVVM
         public void Execute(object parameter)
         {
             executeAction(parameter);
+            
         }
       
         

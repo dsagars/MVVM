@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +21,11 @@ namespace CompanyMVVM
     public partial class EnterData : Window
     {
         private Company _company;
-
+        private ObservableCollection<Company> EnterDataCompanyCollection;
         public EnterData()
         {
             InitializeComponent();
-
+            DataContext = new CompanyViewModel();
 
         }
         public EnterData(Company company)
@@ -32,10 +33,8 @@ namespace CompanyMVVM
             
             InitializeComponent();
             this._company = company;
-            DataContext = new EnterDataViewModel(_company);
-            
-
-
+            DataContext = new CompanyViewModel(_company);         
         }
+        
     }
 }
