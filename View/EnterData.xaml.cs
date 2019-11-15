@@ -21,7 +21,7 @@ namespace CompanyMVVM
     public partial class EnterData : Window
     {
         private Company _company;
-        private ObservableCollection<Company> EnterDataCompanyCollection;
+       
         public EnterData()
         {
             InitializeComponent();
@@ -29,12 +29,10 @@ namespace CompanyMVVM
 
         }
         public EnterData(Company company)
-        {
-            
+        {           
             InitializeComponent();
             this._company = company;
             DataContext = new CompanyViewModel(_company);         
-        }
-        
+        }    
     }
 }

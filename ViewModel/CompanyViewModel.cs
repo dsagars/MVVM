@@ -8,11 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using GalaSoft.MvvmLight.Messaging;
+using System.Runtime.CompilerServices;
 
 namespace CompanyMVVM
 {
     [AddINotifyPropertyChangedInterface]
-    public class CompanyViewModel : ViewModelBase,INotifyPropertyChanged
+    public class CompanyViewModel : ViewModelBase, INotifyPropertyChanged
     {
         #region Public Properties  
         public ObservableCollection<Company> Companies { get; set; }
@@ -33,8 +35,9 @@ namespace CompanyMVVM
         public ICommand CloseCommand { get; private set; }
         public ICommand AddCommand { get; private set; }
         public ICommand DoubleClickCommand { get; private set; }
+        public Company BindableCompany { get; set; }
         #endregion
-        
+
 
         #region Constructor
         public CompanyViewModel()
@@ -53,7 +56,7 @@ namespace CompanyMVVM
 
             AddCommand = new Command(ExecuteAdd, CanExecuteAdd);
             DoubleClickCommand = new Command(ExecuteDoubleClick, CanDoubleClick);
-            
+
         }
         public CompanyViewModel(Company company)
         {
@@ -62,7 +65,7 @@ namespace CompanyMVVM
             IsMainCompanyCheckBox = company.IsMainCompany;
             AddressTextBox = company.Address;
         }
-            
+
         #endregion
 
 
@@ -75,7 +78,7 @@ namespace CompanyMVVM
         /// <returns></returns>
         /// 
 
-         #region AddCommand
+        #region AddCommand
         public event EventHandler CanExecuteChanged
         {
             add
@@ -88,7 +91,7 @@ namespace CompanyMVVM
                 AddCommand.CanExecuteChanged -= value;
             }
         }
-        
+
         private bool CanExecuteAdd(object parameter)
         {
             return true;
@@ -98,6 +101,10 @@ namespace CompanyMVVM
         {
             EnterData enterData = new EnterData();
             enterData.Show();
+            //WindowService ws = new WindowService();
+            //EnterDataViewModel dataViewModel = new EnterDataViewModel();
+            //ws.showWindow<EnterData>(dataViewModel);
+
         }
         #endregion
 
@@ -114,15 +121,25 @@ namespace CompanyMVVM
         }
         private void ExecuteDoubleClick(object parameter)
         {
-            if(SelectedItemOnTheControl != null)
+            if (SelectedItemOnTheControl != null)
             {
-                
-               // Company company = SelectedItemOnTheControl;
-                EnterData enterData = new EnterData(SelectedItemOnTheControl);  
+
+                // Company company = SelectedItemOnTheControl;
+                EnterData enterData = new EnterData(SelectedItemOnTheControl);
                 enterData.Show();
             }
         }
+
+
+        #endregion
+
+
+
+        #region SaveCommand
+        private ICommand saveCommand;
+        public ICommand SaveCommand { get; set; }
         #endregion
     }
 }
+
     

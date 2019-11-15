@@ -34,11 +34,14 @@ namespace CompanyMVVM
         public Company SaveCompany { get; set; }
 
         #endregion
-       
 
-        
+
+
         #region Constructor
-
+        public EnterDataViewModel()
+        {
+            
+        }
         public EnterDataViewModel(Company company)
         {
             CompanyViewModel model = new CompanyViewModel();
@@ -53,19 +56,19 @@ namespace CompanyMVVM
                 
         }
        
-        public EnterDataViewModel(ObservableCollection<Company> companies)
-        {
-            //Company company = new Company();
-            //company.Id = IdTextBox;
-            //company.CompanyName = CompanyNameTextBox;
-            //company.IsMainCompany = IsMainCompanyCheckBox;
-            //company.Cars = Cars;
-            //company.Address = AddressTextBox;
-            //companies.Add(company);
-            //GetCompanies = companies;
-            companies = GetCompanies;
+        //public EnterDataViewModel(ObservableCollection<Company> companies)
+        //{
+        //    //Company company = new Company();
+        //    //company.Id = IdTextBox;
+        //    //company.CompanyName = CompanyNameTextBox;
+        //    //company.IsMainCompany = IsMainCompanyCheckBox;
+        //    //company.Cars = Cars;
+        //    //company.Address = AddressTextBox;
+        //    //companies.Add(company);
+        //    //GetCompanies = companies;
+        //    companies = GetCompanies;
             
-        }
+        //}
         #endregion
 
 

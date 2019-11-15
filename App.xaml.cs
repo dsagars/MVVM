@@ -13,6 +13,6 @@ namespace CompanyMVVM
     /// </summary>
     public partial class App : Application
     {
-   
+    
     }
 }
