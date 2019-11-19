@@ -28,10 +28,7 @@ namespace CompanyMVVM
 
         public void Execute(object parameter)
         {
-            executeAction(parameter);
-            
-        }
-      
-        
+            executeAction(parameter);    
+        }        
     }
 }

@@ -9,7 +9,7 @@ using PropertyChanged;
 namespace CompanyMVVM
 {
     [AddINotifyPropertyChangedInterface]
-    public class Company : ViewModelBase, INotifyPropertyChanged
+    public class Company : ViewModelBase
     {
        
         public int Id { get; set; }

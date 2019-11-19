@@ -8,7 +8,9 @@
         mc:Ignorable="d"
         x:Name="MainWindowView"
         Title="MainWindow" Height="450" Width="950" WindowStartupLocation="Manual">
-    
+    <Window.DataContext>
+        <local:CompanyViewModel/>
+    </Window.DataContext>
     <Grid RenderTransformOrigin="0.491,0.585">
         <Grid.RowDefinitions>
             <RowDefinition Height="319" />

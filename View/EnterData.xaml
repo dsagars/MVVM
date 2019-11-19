@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:CompanyMVVM"  
         mc:Ignorable="d"
         
-         Height="450" Width="800" Background="White">
-    <Grid HorizontalAlignment="Right" Width="792" Visibility="Visible">
+         Height="450" Width="800" >
+    <Grid HorizontalAlignment="Right" Width="792" Visibility="Visible" Background="White">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -36,8 +36,9 @@
         <Label Content="Main Company" Grid.Row="0" Grid.Column="2" FontSize="15" FontWeight="Bold"/>
         <Label Content="Cars" Grid.Row="0" Grid.Column="3" FontSize="15" FontWeight="Bold"/>
         <Label Content="Address" Grid.Row="0" Grid.Column="4" FontSize="15" FontWeight="Bold"/>
-        <TextBox  Name="iDAddOrEditTxtBox" Text="{Binding IdTextBox, UpdateSourceTrigger=LostFocus}" Margin="10,10,46,341" Grid.Row="1" Grid.Column="0" />
-        <TextBox  Name="companyNameAddOrEditTxtBox" Text="{Binding CompanyNameTextBox ,UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,341" Grid.Row="1" Grid.Column="1" />
+
+        <TextBox  Name="iDAddOrEditTxtBox" Text="{Binding IdTextBox , UpdateSourceTrigger=PropertyChanged}" Margin="10,10,46,341" Grid.Row="1" Grid.Column="0" />
+        <TextBox  Name="companyNameAddOrEditTxtBox" Text="{Binding CompanyNameTextBox }" Margin="10,10,10,341" Grid.Row="1" Grid.Column="1" />
         <CheckBox x:Name="isMainCompanyAddOrEditCheckBox" Content="{Binding IsMainCompanyCheckBox}" Grid.ColumnSpan="2" Grid.Column="2" Margin="14,18,184,333" Grid.Row="1" />
         <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Vertical" Height="Auto" Width="Auto" >
             <Label Content="Street :"/>

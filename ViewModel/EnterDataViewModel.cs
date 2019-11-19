@@ -22,6 +22,7 @@ namespace CompanyMVVM
         private ObservableCollection<Company> getCompanies;
 
         public int IdTextBox { get; set; }
+        
       
         public string CompanyNameTextBox { get; set; }
 
@@ -43,19 +44,18 @@ namespace CompanyMVVM
             
         }
         public EnterDataViewModel(Company company)
-        {
-            CompanyViewModel model = new CompanyViewModel();
-               this.GetCompanies = model.Companies;
+        {    
+            IdTextBox = company.Id;
+            CompanyNameTextBox = company.CompanyName;
+            IsMainCompanyCheckBox = company.IsMainCompany;
+            Cars = company.Cars;
+            AddressTextBox = company.Address;
+            CreateSaveCommand();
             
-                //Company company1 = new Company();
-                IdTextBox = company.Id;
-                CompanyNameTextBox = company.CompanyName;
-                IsMainCompanyCheckBox = company.IsMainCompany;
-                Cars = company.Cars;
-                AddressTextBox = company.Address;
-                
+
+            
         }
-       
+
         //public EnterDataViewModel(ObservableCollection<Company> companies)
         //{
         //    //Company company = new Company();
@@ -67,7 +67,7 @@ namespace CompanyMVVM
         //    //companies.Add(company);
         //    //GetCompanies = companies;
         //    companies = GetCompanies;
-            
+
         //}
         #endregion
 
