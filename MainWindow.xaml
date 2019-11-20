@@ -8,16 +8,14 @@
         mc:Ignorable="d"
         x:Name="MainWindowView"
         Title="MainWindow" Height="450" Width="950" WindowStartupLocation="Manual">
-    <Window.DataContext>
-        <local:CompanyViewModel/>
-    </Window.DataContext>
+    
     <Grid RenderTransformOrigin="0.491,0.585">
         <Grid.RowDefinitions>
             <RowDefinition Height="319" />
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
 
-        <ListView Name="CompanyListView" ItemsSource="{Binding Companies}" SelectedItem="{Binding SelectedItemOnTheControl}"  IsSynchronizedWithCurrentItem="True" AlternationCount="2">
+        <ListView Name="CompanyListView" ItemsSource="{Binding Companies}" SelectedItem="{Binding SelectedItemOnControl}"  IsSynchronizedWithCurrentItem="True" AlternationCount="2">
             <ListView.Resources>
                 <Style TargetType="{x:Type GridViewColumnHeader}">
                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -44,8 +42,8 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id , UpdateSourceTrigger=Explicit, Mode=TwoWay}" Width="80"></GridViewColumn>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding CompanyName , UpdateSourceTrigger=Explicit, Mode=TwoWay}" Width="200"></GridViewColumn>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id , UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="80"></GridViewColumn>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding CompanyName , UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="200"></GridViewColumn>
                     <GridViewColumn Header="Is Main Company" Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

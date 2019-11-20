@@ -13,23 +13,28 @@ namespace CompanyMVVM
     [AddINotifyPropertyChangedInterface]
     public class EnterDataViewModel : ViewModelBase, ICommand, INotifyPropertyChanged
     {
-        #region Properties
-        private int id;
-        private string companyName;
-        private bool isMainCompany;
-        private CompanyAddress address;
-        private IList<Car> cars;
-        private ObservableCollection<Company> getCompanies;
+        #region Private Properties
+       
+        #endregion
+        #region Properties     
+        //public int IdTextBox
+        //{
+        //    get { return idTextBox; }
+        //    set
+        //    {
+        //        if(idTextBox != value)
+        //        {
+        //            idTextBox = value;
+        //            OnPropertyChanged("IdTextBox");
+        //        }
+        //    }
+        //}
+        //public string CompanyNameTextBox { get; set; }
 
-        public int IdTextBox { get; set; }
-        
-      
-        public string CompanyNameTextBox { get; set; }
+        //public bool IsMainCompanyCheckBox { get; set; }
 
-        public bool IsMainCompanyCheckBox { get; set; }
-
-        public CompanyAddress AddressTextBox { get; set; }
-        public IList<Car> Cars { get; set; }
+        //public CompanyAddress AddressTextBox { get; set; }
+        //public IList<Car> Cars { get; set; }
         public ObservableCollection<Company> GetCompanies { get; set; }
         public Company company { get; set; }
         public Company SaveCompany { get; set; }
@@ -39,35 +44,31 @@ namespace CompanyMVVM
 
 
         #region Constructor
-        public EnterDataViewModel()
-        {
-            
-        }
-        public EnterDataViewModel(Company company)
-        {    
-            IdTextBox = company.Id;
-            CompanyNameTextBox = company.CompanyName;
-            IsMainCompanyCheckBox = company.IsMainCompany;
-            Cars = company.Cars;
-            AddressTextBox = company.Address;
-            CreateSaveCommand();
-            
-
-            
-        }
-
-        //public EnterDataViewModel(ObservableCollection<Company> companies)
+        //public EnterDataViewModel(CompanyViewModel companyViewModel)
         //{
-        //    //Company company = new Company();
-        //    //company.Id = IdTextBox;
-        //    //company.CompanyName = CompanyNameTextBox;
-        //    //company.IsMainCompany = IsMainCompanyCheckBox;
-        //    //company.Cars = Cars;
-        //    //company.Address = AddressTextBox;
-        //    //companies.Add(company);
-        //    //GetCompanies = companies;
-        //    companies = GetCompanies;
+        //    Company company = new Company();
+        //    company.Id = int.Parse(companyViewModel.IdTextBox);
+        //    company.CompanyName = companyViewModel.CompanyNameTextBox;
+        //    company.IsMainCompany = companyViewModel.IsMainCompanyCheckBox;
+        //    company.Cars = companyViewModel.Cars;
+        //    company.Address = companyViewModel.AddressTextBox;
+        //    companyViewModel.Companies.Add(company);
+            
+        //}
+        //public EnterDataViewModel(Company company , CompanyViewModel companyViewModel)
+        //{
+        //    //IdTextBox = company.Id;
+        //    company = new Company();
+        //    company.Id = IdTextBox;
+        //    CompanyNameTextBox = company.CompanyName;
+        //    IsMainCompanyCheckBox = company.IsMainCompany;
+        //    Cars = company.Cars;
+        //    AddressTextBox = company.Address;
+        //    GetCompanies = new ObservableCollection<Company>();
 
+        //    GetCompanies.Add(company);
+        //    companyViewModel.Companies = this.GetCompanies;
+        //    CreateSaveCommand(GetCompanies); 
         //}
         #endregion
 
@@ -93,14 +94,14 @@ namespace CompanyMVVM
         {
             return true;
         }
-        private void CreateSaveCommand()
+        private void CreateSaveCommand(ObservableCollection<Company> companies)
         {
+            
             SaveCommand = new Command(Execute, CanExecute);
         }
         public void Execute(object parameter)
         {
-            CompanyViewModel test = new CompanyViewModel();
-            test.Companies = GetCompanies;
+            
         }
 
         #endregion

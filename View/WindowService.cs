@@ -32,10 +32,10 @@ namespace CompanyMVVM
     //}
     public class WindowService : IWindowService
     {
-        public void ShowWindow<T>(object DataContext) where T : Window, new()
+        public void ShowWindow<T>(object viewModel) where T : Window, new()
         {
             T view = new T();
-            view.DataContext = DataContext;
+            view.DataContext = viewModel;
             view.Show();
 
         }

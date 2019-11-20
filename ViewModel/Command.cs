@@ -16,14 +16,18 @@ namespace CompanyMVVM
 
         public Command(Action<object> executeMethod, Func<object, bool> canExecuteMethod)
         {
+            
             this.executeAction = executeMethod;
             this.canExecuteAction = canExecuteMethod;
         }
         public event EventHandler CanExecuteChanged;
+        
+      
 
         public bool CanExecute(object parameter)
         {
             return true;
+            
         }
 
         public void Execute(object parameter)

@@ -5,6 +5,6 @@ namespace CompanyMVVM
 {
     public interface IWindowService
     {
-        void ShowWindow<T>(object DataContext) where T : Window, new();
+        void ShowWindow<T>(object viewModel) where T : Window, new();
     }
 }

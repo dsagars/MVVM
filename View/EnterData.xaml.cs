@@ -21,10 +21,11 @@ namespace CompanyMVVM
     public partial class EnterData : Window
     {
         private Company _company;
-       
+
         public EnterData()
         {
             InitializeComponent();
+
             DataContext = new CompanyViewModel();
 
         }
