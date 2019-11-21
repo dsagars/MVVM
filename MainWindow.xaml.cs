@@ -24,9 +24,12 @@ namespace CompanyMVVM
       
         public MainWindow()
         {
-            
+            var viewModel = new CompanyViewModel();
+            EnterData enterData = new EnterData();
+            enterData.DataContext = viewModel;
+            DataContext = viewModel;
             InitializeComponent();
-            this.DataContext = new CompanyViewModel();
+            
    
         }
 
@@ -34,7 +37,12 @@ namespace CompanyMVVM
         {        
             CompanyViewModel vm = this.DataContext as CompanyViewModel;
             vm.DoubleClickCommand.Execute(DataContext);
-           
+            vm.CompanyAddedEvent += ItemAddedEventHandler;
+        }
+
+        public void ItemAddedEventHandler(object sender, CompanyAddedEventHandler e)
+        {
+            (DataContext as CompanyViewModel).Companies.Add(e.newCompany);
         }
     }
     

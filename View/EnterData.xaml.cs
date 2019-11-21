@@ -20,20 +20,25 @@ namespace CompanyMVVM
     /// </summary>
     public partial class EnterData : Window
     {
-        private Company _company;
-
+       
         public EnterData()
         {
             InitializeComponent();
 
             DataContext = new CompanyViewModel();
-
+           
+         
         }
-        public EnterData(Company company)
-        {           
-            InitializeComponent();
-            this._company = company;
-            DataContext = new CompanyViewModel(_company);         
-        }    
+
+        //public EnterData()
+        //{
+
+        //}
+        //public EnterData(Company company)
+        //{           
+        //    InitializeComponent();
+        //    this._company = company;
+        //    DataContext = new CompanyViewModel(_company);         
+        //}    
     }
 }

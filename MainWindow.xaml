@@ -15,7 +15,7 @@
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
 
-        <ListView Name="CompanyListView" ItemsSource="{Binding Companies}" SelectedItem="{Binding SelectedItemOnControl}"  IsSynchronizedWithCurrentItem="True" AlternationCount="2">
+        <ListView Name="CompanyListView" ItemsSource="{Binding Companies, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItemOnControl}"  IsSynchronizedWithCurrentItem="True"  AlternationCount="2">
             <ListView.Resources>
                 <Style TargetType="{x:Type GridViewColumnHeader}">
                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -42,8 +42,8 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id , UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="80"></GridViewColumn>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding CompanyName , UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="200"></GridViewColumn>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id , UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="80"></GridViewColumn>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding CompanyName , UpdateSourceTrigger=Explicit}" Width="200"></GridViewColumn>
                     <GridViewColumn Header="Is Main Company" Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -55,7 +55,7 @@
                     <GridViewColumn x:Name="comboColumn" Header="Cars" Width="350">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate >
-                                <ComboBox x:Name="carsCombo" Width="300"  ItemsSource="{Binding Cars, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectedIndex="0"  IsEditable="False" SelectedItem="{Binding Car, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="CarName" ItemStringFormat="{}{0:CarName} {}{1:MFD} ">
+                                <ComboBox x:Name="carsCombo" Width="300"  ItemsSource="{Binding Cars, Mode=TwoWay, UpdateSourceTrigger=Explicit}"  SelectedIndex="0"  IsEditable="False" SelectedItem="{Binding Car, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="CarName" ItemStringFormat="{}{0:CarName} {}{1:MFD} ">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <Expander>

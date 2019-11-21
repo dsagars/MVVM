@@ -17,13 +17,11 @@ namespace CompanyMVVM
         public Command(Action<object> executeMethod, Func<object, bool> canExecuteMethod)
         {
             
-            this.executeAction = executeMethod;
+            executeAction = executeMethod;
             this.canExecuteAction = canExecuteMethod;
         }
         public event EventHandler CanExecuteChanged;
-        
-      
-
+       
         public bool CanExecute(object parameter)
         {
             return true;
@@ -33,6 +31,13 @@ namespace CompanyMVVM
         public void Execute(object parameter)
         {
             executeAction(parameter);    
-        }        
+        }  
+        public void RaiseCanExecuteChanged()
+        {
+            if(CanExecuteChanged != null)
+            {
+                CanExecuteChanged(this, EventArgs.Empty);
+            }
+        }
     }
 }

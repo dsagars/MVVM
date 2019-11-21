@@ -8,36 +8,15 @@ using System.Windows.Controls;
 
 namespace CompanyMVVM
 {
-    //public class WindowService : IWindowService
-    //{
-    //    public void ShowWindow<T>(T viewmodel)
-    //    {
-    //        var window = Application.Current
-    //                                .Windows
-    //                                .OfType<EnterData>()
-    //                                .FirstOrDefault(x => x.Content?.GetType() == viewmodel.GetType());
-    //        if(window == null)
-    //        {
-    //            window = new EnterData{ Content = viewmodel };
-    //            window.Title = "Enter Data";
-    //            window.Owner = Application.Current.Windows[0];
-    //            window.Show();
-
-    //        }
-    //        else
-    //        {
-    //            window.Activate();
-    //        }
-    //    }
-    //}
     public class WindowService : IWindowService
     {
-        public void ShowWindow<T>(object viewModel) where T : Window, new()
+        public void ShowWindow<T>(object DataContext) where T : Window, new()
         {
             T view = new T();
-            view.DataContext = viewModel;
+            view.DataContext = DataContext;
             view.Show();
 
         }
     }
+
 }

@@ -1,20 +1,17 @@
-﻿using GalaSoft.MvvmLight;
-using PropertyChanged;
+﻿using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Messaging;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace CompanyMVVM
 {
     [AddINotifyPropertyChangedInterface]
-    public class CompanyViewModel : INotifyPropertyChanged
+    public class CompanyViewModel : ViewModelBase
     {
 
         #region Properties  
@@ -39,8 +36,7 @@ namespace CompanyMVVM
             get { return _companies; }
             set { SetField(ref _companies, value, "Companies"); } 
         }
-        public ObservableCollection<Car> CarsCollection { get; set; }
-
+        
         public Company SelectedItemOnControl
         {
             get { return _selectedItemOnControl; }
@@ -114,6 +110,7 @@ namespace CompanyMVVM
             OnPropertyChanged(propertyName);
             return true;
         }
+        #region PropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName]string propertyName = "")
         {
@@ -122,6 +119,9 @@ namespace CompanyMVVM
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        #endregion
+
+
         #region Commands
         public ICommand CloseCommand { get; private set; }
         public ICommand AddCommand { get; private set; }
@@ -132,12 +132,12 @@ namespace CompanyMVVM
 
 
 
-
+        
         #region Constructor
         public CompanyViewModel()
         {
 
-            Companies = new ObservableCollection<Company>();
+            this.Companies = new ObservableCollection<Company>();
             IList<Car> cars = new List<Car>();
             cars.Add(new Car("Audi A1", "red", 4, 4, new DateTime(2026, 02, 12)));
             cars.Add(new Car("BMW", "red", 4, 4, new DateTime(2026, 02, 12)));
@@ -145,42 +145,32 @@ namespace CompanyMVVM
             
             Cars = new ObservableCollection<Car>(cars.AsEnumerable<Car>());
 
-            Companies.Add(new Company(1, " GmbH", false, new CompanyAddress("Frankenstraße", 12), Cars));
-            Companies.Add(new Company(2, "Hanseaticsoft GmbH", true, new CompanyAddress("Frankenstraße", 12), Cars));
+            this.Companies.Add(new Company(1, " GmbH", false, new CompanyAddress("Frankenstraße", 12), Cars));
+            this.Companies.Add(new Company(2, "Hanseaticsoft GmbH", true, new CompanyAddress("Frankenstraße", 12), Cars));
 
             
             AddCommand = new Command(ExecuteAdd, CanExecuteAdd);
             DoubleClickCommand = new Command(ExecuteDoubleClick, CanDoubleClick);
             
-            
+
+
         }
+        public Company dummyCompany { get; set; }
         public CompanyViewModel(Company company)
         {
 
-            //Id = company.Id;
-            //CompanyName = company.CompanyName;
-            //IsMainCompany = company.IsMainCompany;
-            //Address = company.Address;
-            //this.SelectedItemOnControl = company;
-            //_company = new Company();
-            //_company = company;
-            //Companies.Add(_company);
-
-
-            this.Id = company.Id;
-            this.CompanyName = company.CompanyName;
-            this.IsMainCompany = company.IsMainCompany;
-            this.Address = company.Address;
-            this.Cars = company.Cars;
-            Companies = new ObservableCollection<Company>();
-            Companies.Add(company);
-            CreateSaveCommand();
+            this.Companies = new ObservableCollection<Company>();    
+            dummyCompany = company;
+            this.Companies.Add(dummyCompany);
+            SaveCommand = new Command(SaveExecute, CanExecuteSaveCommand);
+            MessageBox.Show(Companies.Count.ToString());
+           
         }
-       
+
 
         #endregion
-       
-       
+
+
 
         /// <summary>
         /// Add Execution
@@ -188,7 +178,7 @@ namespace CompanyMVVM
         /// <param name="parameter"></param>
         /// <returns></returns>
         /// 
-        
+
         #region AddCommand
         public event EventHandler CanExecuteAddChanged
         {
@@ -225,6 +215,7 @@ namespace CompanyMVVM
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
+        /// 
         #region Double Click  
         private bool CanDoubleClick(object parameter)
         {
@@ -246,26 +237,41 @@ namespace CompanyMVVM
 
 
         #region SaveCommand
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-        public ICommand SaveCommand { get; internal set; }
+        public event EventHandler CanExecuteChanged;
+        
+        public ICommand SaveCommand { get; set; }
+       
         private bool CanExecuteSaveCommand(object parameter)
         {
             return true;
-        }
-        private void CreateSaveCommand()
-        {
-            SaveCommand = new Command(SaveExecute, CanExecuteSaveCommand);
-           
-        }
+        } 
         private void SaveExecute(object parameter)
         {
-            
+
+            Company newDummyCompany = new Company();
+            newDummyCompany.Id = dummyCompany.Id;
+            newDummyCompany.CompanyName = dummyCompany.CompanyName;
+            newDummyCompany.IsMainCompany = dummyCompany.IsMainCompany;
+            newDummyCompany.Address = dummyCompany.Address;
+            newDummyCompany.Cars = dummyCompany.Cars;
+            Companies.Add(newDummyCompany);
+            MessageBox.Show(newDummyCompany.CompanyName.ToString());
+            RaiseNewCompanyEvent(newDummyCompany);
+
+
         }
+
         #endregion
+        public event EventHandler<CompanyAddedEventHandler> CompanyAddedEvent;
+        protected void RaiseNewCompanyEvent(Company company)
+        {
+            var companyAddedEventArgs = new CompanyAddedEventHandler { newCompany = company };
+            var handler = CompanyAddedEvent;
+            if(handler != null)
+            {
+                handler(this, companyAddedEventArgs);
+            }
+        }
     }
 }
 
