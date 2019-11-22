@@ -8,7 +8,7 @@ using PropertyChanged;
 
 namespace CompanyMVVM
 {
-    [AddINotifyPropertyChangedInterface]
+    //[AddINotifyPropertyChangedInterface]
     public class Company : ViewModelBase
     {
        

@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Collections.Specialized;
 
 namespace CompanyMVVM
 {
@@ -28,24 +29,45 @@ namespace CompanyMVVM
         private int _tires;
         private DateTime _mfd;
         private readonly Company _company;
+        private Company viewModelCompany;
 
-        
 
         public ObservableCollection<Company> Companies
         {
             get { return _companies; }
-            set { SetField(ref _companies, value, "Companies"); } 
+            set { SetField(ref _companies, value, "Companies"); }         
         }
-        
+
+        public Company ViewModelCompany
+        {
+            get { return viewModelCompany; }
+            set
+            {
+                if (viewModelCompany != value)
+                {
+                    viewModelCompany = value;
+                    OnPropertyChanged("ViewModelCompany");
+                    OnPropertyChanged("SelectedItemOnControl");
+                }
+
+            }
+        }
         public Company SelectedItemOnControl
         {
             get { return _selectedItemOnControl; }
-            set { SetField(ref _selectedItemOnControl, value, "SelectedItemOnControl"); }
+            set
+            {
+                if(_selectedItemOnControl != value)
+                {
+                    _selectedItemOnControl = value;
+                    OnPropertyChanged("SelectedItemOnControl");
+                    OnPropertyChanged("ViewModelCompany");
+                }
+            }
+                  
         }
 
-        
-
-        public  int Id
+        public int Id
         {
             get { return _id; }
             set
@@ -111,14 +133,14 @@ namespace CompanyMVVM
             return true;
         }
         #region PropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName]string propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+        //public event PropertyChangedEventHandler PropertyChanged;
+        //protected void OnPropertyChanged([CallerMemberName]string propertyName = "")
+        //{
+        //    if (PropertyChanged != null)
+        //    {
+        //        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        //    }
+        //}
         #endregion
 
 
@@ -126,13 +148,13 @@ namespace CompanyMVVM
         public ICommand CloseCommand { get; private set; }
         public ICommand AddCommand { get; private set; }
         public ICommand DoubleClickCommand { get; private set; }
-      
+
         #endregion
 
 
 
 
-        
+
         #region Constructor
         public CompanyViewModel()
         {
@@ -142,31 +164,53 @@ namespace CompanyMVVM
             cars.Add(new Car("Audi A1", "red", 4, 4, new DateTime(2026, 02, 12)));
             cars.Add(new Car("BMW", "red", 4, 4, new DateTime(2026, 02, 12)));
             cars.Add(new Car("Opel", "red", 4, 4, new DateTime(2026, 02, 12)));
-            
+
             Cars = new ObservableCollection<Car>(cars.AsEnumerable<Car>());
 
             this.Companies.Add(new Company(1, " GmbH", false, new CompanyAddress("Frankenstraße", 12), Cars));
             this.Companies.Add(new Company(2, "Hanseaticsoft GmbH", true, new CompanyAddress("Frankenstraße", 12), Cars));
 
-            
+            ViewModelCompany = new Company();
+            this.Id = ViewModelCompany.Id;
+            this.CompanyName = ViewModelCompany.CompanyName;
+            this.IsMainCompany = ViewModelCompany.IsMainCompany;
+            this.Address = ViewModelCompany.Address;
+            this.Cars = ViewModelCompany.Cars;
+
             AddCommand = new Command(ExecuteAdd, CanExecuteAdd);
             DoubleClickCommand = new Command(ExecuteDoubleClick, CanDoubleClick);
-            
+
 
 
         }
-        public Company dummyCompany { get; set; }
+
         public CompanyViewModel(Company company)
         {
+            this.Companies = new ObservableCollection<Company>();
+            IList<Car> cars = new List<Car>();
+            cars.Add(new Car("Audi A1", "red", 4, 4, new DateTime(2026, 02, 12)));
+            cars.Add(new Car("BMW", "red", 4, 4, new DateTime(2026, 02, 12)));
+            cars.Add(new Car("Opel", "red", 4, 4, new DateTime(2026, 02, 12)));
 
-            this.Companies = new ObservableCollection<Company>();    
-            dummyCompany = company;
-            this.Companies.Add(dummyCompany);
+            Cars = new ObservableCollection<Car>(cars.AsEnumerable<Car>());
+
+            this.Companies.Add(new Company(1, " GmbH", false, new CompanyAddress("Frankenstraße", 12), Cars));
+            this.Companies.Add(new Company(2, "Hanseaticsoft GmbH", true, new CompanyAddress("Frankenstraße", 12), Cars));
+
+            //this.ViewModelCompany = company;
+
+            SelectedItemOnControl = company;
+            
             SaveCommand = new Command(SaveExecute, CanExecuteSaveCommand);
-            MessageBox.Show(Companies.Count.ToString());
            
         }
-
+        public event PropertyChangedEventHandler CompanyPropertyChanged;
+        protected void RaisePropertyChanged(PropertyChangedEventArgs e)
+        {
+            PropertyChangedEventHandler handler = CompanyPropertyChanged;
+            if (handler != null)
+                handler(this, e);
+        }
 
         #endregion
 
@@ -197,14 +241,31 @@ namespace CompanyMVVM
         {
             return true;
         }
-        
+
         private void ExecuteAdd(object parameter)
-        {    
+        {
             WindowService ws = new WindowService();
             CompanyViewModel dataViewModel = new CompanyViewModel();
             ws.ShowWindow<EnterData>(dataViewModel);
-           
+            //AddSave();
         }
+        //private Company AddSave()
+        //{
+
+        //    var viewModel = new CompanyViewModel();
+        //    ViewModelCompany = new Company();
+
+        //    Companies = new ObservableCollection<Company>();  
+
+        //    ViewModelCompany.Id = this.Id;
+        //    ViewModelCompany.CompanyName = this.CompanyName;
+        //    ViewModelCompany.IsMainCompany = this.IsMainCompany;
+        //    ViewModelCompany.Cars = this.Cars;
+        //    ViewModelCompany.Address = this.Address;
+        //    Companies.Add(ViewModelCompany);
+
+        //    return ViewModelCompany;
+        //}
         #endregion
 
 
@@ -217,6 +278,7 @@ namespace CompanyMVVM
         /// <returns></returns>
         /// 
         #region Double Click  
+
         private bool CanDoubleClick(object parameter)
         {
             return true;
@@ -224,12 +286,12 @@ namespace CompanyMVVM
         private void ExecuteDoubleClick(object parameter)
         {
             if (SelectedItemOnControl != null)
-            {     
+            {
                 WindowService ws = new WindowService();
                 CompanyViewModel dataViewModel = new CompanyViewModel(SelectedItemOnControl);
                 ws.ShowWindow<EnterData>(dataViewModel);
             }
-            
+
         }
 
 
@@ -238,27 +300,27 @@ namespace CompanyMVVM
 
         #region SaveCommand
         public event EventHandler CanExecuteChanged;
+        private Command saveCommand;
+        public ICommand SaveCommand { get; }
         
-        public ICommand SaveCommand { get; set; }
-       
+
         private bool CanExecuteSaveCommand(object parameter)
         {
             return true;
-        } 
+        }
+        
         private void SaveExecute(object parameter)
         {
-
-            Company newDummyCompany = new Company();
-            newDummyCompany.Id = dummyCompany.Id;
-            newDummyCompany.CompanyName = dummyCompany.CompanyName;
-            newDummyCompany.IsMainCompany = dummyCompany.IsMainCompany;
-            newDummyCompany.Address = dummyCompany.Address;
-            newDummyCompany.Cars = dummyCompany.Cars;
-            Companies.Add(newDummyCompany);
-            MessageBox.Show(newDummyCompany.CompanyName.ToString());
-            RaiseNewCompanyEvent(newDummyCompany);
-
-
+            ViewModelCompany = new Company();
+            ViewModelCompany = SelectedItemOnControl;
+            Companies.Add(ViewModelCompany);
+            SelectedItemOnControl.PropertyChanged += CompanyPropertyChanged;  
+            CompaniesOutput(Companies, SelectedItemOnControl);
+            foreach(Company company in Companies)
+            {
+                MessageBox.Show(company.CompanyName);
+            }
+            this.Companies = Companies;
         }
 
         #endregion
@@ -267,10 +329,45 @@ namespace CompanyMVVM
         {
             var companyAddedEventArgs = new CompanyAddedEventHandler { newCompany = company };
             var handler = CompanyAddedEvent;
-            if(handler != null)
+            if (handler != null)
             {
                 handler(this, companyAddedEventArgs);
             }
+        }
+
+        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (Company newItem in e.NewItems)
+                {
+                    Companies.Add(newItem);
+
+                    //Add listener for each item on PropertyChanged event
+                    if (e.Action == NotifyCollectionChangedAction.Add)
+                        newItem.PropertyChanged += this.CompanyPropertyChanged;
+                    else if (e.Action == NotifyCollectionChangedAction.Remove)
+                        newItem.PropertyChanged -= this.CompanyPropertyChanged;
+                }
+            }
+        }
+
+        private Company CompaniesOutput(ObservableCollection<Company> companies, Company company)
+        {
+            if(company.Equals(SelectedItemOnControl) != true)
+            {
+                this.Id = company.Id;
+                this.CompanyName = company.CompanyName;
+                this.IsMainCompany = company.IsMainCompany;
+                this.Cars = company.Cars;
+                this.Address = company.Address;
+                // Companies.Add(new Company(this.Id, this.CompanyName, this.IsMainCompany, this.Address, this.Cars));
+                company = new Company(this.Id, this.CompanyName, this.IsMainCompany, this.Address, this.Cars);
+                SelectedItemOnControl = company;
+            }
+            return SelectedItemOnControl;
+
+            
         }
     }
 }

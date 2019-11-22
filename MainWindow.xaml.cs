@@ -21,28 +21,30 @@ namespace CompanyMVVM
     /// </summary>
     public partial class MainWindow : Window, IClosable
     {
-      
+        private Company company;
         public MainWindow()
         {
-            var viewModel = new CompanyViewModel();
+            var viewModel = new CompanyViewModel();            
             EnterData enterData = new EnterData();
-            enterData.DataContext = viewModel;
-            DataContext = viewModel;
-            InitializeComponent();
             
-   
+            
+            InitializeComponent();
+            enterData.DataContext = this.DataContext;
+            DataContext = viewModel;
+
         }
 
         private void CompanyListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {        
             CompanyViewModel vm = this.DataContext as CompanyViewModel;
-            vm.DoubleClickCommand.Execute(DataContext);
+            vm.DoubleClickCommand.Execute(this.DataContext);
             vm.CompanyAddedEvent += ItemAddedEventHandler;
         }
 
         public void ItemAddedEventHandler(object sender, CompanyAddedEventHandler e)
         {
-            (DataContext as CompanyViewModel).Companies.Add(e.newCompany);
+            (this.DataContext as CompanyViewModel).Companies.Add(e.newCompany);
+            (this.DataContext as CompanyViewModel).Companies.CollectionChanged += OnContentChanged;
         }
     }
     

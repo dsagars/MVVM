@@ -6,13 +6,9 @@
         xmlns:local="clr-namespace:CompanyMVVM"  
         mc:Ignorable="d"  
          Height="450" Width="800" >
-
-    <Window.DataContext>
-        <local:CompanyViewModel x:Name="vm"/>
-    </Window.DataContext>
-
+    
     <Grid HorizontalAlignment="Right" Width="794" Background="White" Margin="-2,4,0,0" DataContext="{Binding}">
-        <Grid DataContext="{Binding Companies}">
+        <Grid DataContext="{Binding SelectedItemOnControl , NotifyOnSourceUpdated=True}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -41,7 +37,7 @@
             <Label Content="Cars" Grid.Row="0" Grid.Column="3" FontSize="15" FontWeight="Bold"/>
             <Label Content="Address" Grid.Row="0" Grid.Column="4" FontSize="15" FontWeight="Bold"/>
 
-            <TextBox  Name="iDAddOrEditTxtBox" Text="{Binding Id, UpdateSourceTrigger=Explicit}" Margin="10,10,46,341" Grid.Row="1" Grid.Column="0" />
+            <TextBox  Name="iDAddOrEditTxtBox" Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,46,341" Grid.Row="1" Grid.Column="0" />
             <TextBox  Name="companyNameAddOrEditTxtBox" Text="{Binding CompanyName, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,341" Grid.Row="1" Grid.Column="1" />
             <CheckBox x:Name="isMainCompanyAddOrEditCheckBox" Content="{Binding IsMainCompany, UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding IsMainCompany}"  Grid.ColumnSpan="2" Grid.Column="2" Margin="14,18,184,333" Grid.Row="1" />
             <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Vertical" Height="Auto" Width="Auto" >
@@ -52,21 +48,21 @@
             </StackPanel>
 
 
-            <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" Height="Auto" Width="Auto">
+            <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" Height="Auto" Width="Auto" DataContext="{Binding Cars}">
                 <Label x:Name="Name" Content="Brand:" Grid.Row="2" Grid.Column="3" Height="Auto"/>
                 <TextBox x:Name="txtCarName"  Text="{Binding CarName,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="3" Height="30" Margin="5"/>
                 <Label x:Name="Color" Content="Color:" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Height="Auto"></Label>
-                <TextBox x:Name="txtcolor" Text="{Binding Color, UpdateSourceTrigger=Explicit}"  Height="30" Grid.Column="3" Grid.Row="1" Margin="5"/>
+                <TextBox x:Name="txtcolor" Text="{Binding Color, UpdateSourceTrigger=PropertyChanged}"  Height="30" Grid.Column="3" Grid.Row="1" Margin="5"/>
                 <Label x:Name="Doors" Content="Doors:" Grid.ColumnSpan="2" Grid.Column="3" Height="Auto" Grid.Row="1"></Label>
-                <TextBox x:Name="txtdoors" Text="{Binding Doors , UpdateSourceTrigger=Explicit}" Grid.Column="3" Height="30" Grid.Row="1" Margin="5"/>
+                <TextBox x:Name="txtdoors" Text="{Binding Doors , UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Height="30" Grid.Row="1" Margin="5"/>
                 <Label x:Name="Tires" Content="Tires:" Grid.ColumnSpan="2" Grid.Column="3" Height="Auto" Grid.Row="1"></Label>
-                <TextBox x:Name="txttires" Text="{Binding Tires , UpdateSourceTrigger=Explicit}" Grid.Column="3" Height="30" Grid.Row="1" Margin="5"/>
+                <TextBox x:Name="txttires" Text="{Binding Tires , UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Height="30" Grid.Row="1" Margin="5"/>
                 <Label x:Name="MFD" Content="MFD:" Grid.ColumnSpan="2" Grid.Column="3" Height="Auto" Grid.Row="1"></Label>
-                <DatePicker x:Name="txtmfd" Text="{Binding MFD , UpdateSourceTrigger=Explicit}" Grid.Column="3" Height="30" Grid.Row="1" Margin="5"/>
+                <DatePicker x:Name="txtmfd" Text="{Binding MFD , UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Height="30" Grid.Row="1" Margin="5"/>
             </StackPanel>
         </Grid>
         <Button x:Name="closeButton" Content="Close" Margin="267,342,434,11"  />
-        <Button x:Name="saveButton" Content="Save" Grid.Column="0" Margin="149,343,563,10" Command="{Binding SaveCommand, NotifyOnTargetUpdated=True}"/>
+        <Button x:Name="saveButton" Content="Save" Grid.Column="0" Margin="149,343,563,10" Command="{Binding SaveCommand , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Button x:Name="clearButton" Content="Clear" Margin="20,344,683,9" />
 
     </Grid>
