@@ -15,7 +15,7 @@
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
 
-        <ListView Name="CompanyListView" ItemsSource="{Binding Companies , Mode=TwoWay, UpdateSourceTrigger=Explicit , BindsDirectlyToSource=True}"  SelectedItem="{Binding SelectedItemOnControl }"  IsSynchronizedWithCurrentItem="True"  AlternationCount="2">
+        <ListView Name="CompanyListView" ItemsSource="{Binding Companies , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}"  SelectedItem="{Binding SelectedItemOnControl }"  IsSynchronizedWithCurrentItem="True"  AlternationCount="2">
             <ListView.Resources>
                 <Style TargetType="{x:Type GridViewColumnHeader}">
                     <Setter Property="HorizontalContentAlignment" Value="Left"/>

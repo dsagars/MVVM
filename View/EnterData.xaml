@@ -58,7 +58,7 @@
                 <Label x:Name="Tires" Content="Tires:" Grid.ColumnSpan="2" Grid.Column="3" Height="Auto" Grid.Row="1"></Label>
                 <TextBox x:Name="txttires" Text="{Binding Tires , UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Height="30" Grid.Row="1" Margin="5"/>
                 <Label x:Name="MFD" Content="MFD:" Grid.ColumnSpan="2" Grid.Column="3" Height="Auto" Grid.Row="1"></Label>
-                <DatePicker x:Name="txtmfd" Text="{Binding MFD , UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Height="30" Grid.Row="1" Margin="5"/>
+                <DatePicker x:Name="txtmfd" Text="{Binding MFD , UpdateSourceTrigger=PropertyChanged , Mode=OneWayToSource}" Grid.Column="3" Height="30" Grid.Row="1" Margin="5"/>
             </StackPanel>
         </Grid>
         <Button x:Name="closeButton" Content="Close" Margin="267,342,434,11"  />
