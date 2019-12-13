@@ -94,6 +94,9 @@
     <Compile Include="View\AddressDetailView.xaml.cs">
       <DependentUpon>AddressDetailView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AddUserControl.xaml.cs">
+      <DependentUpon>AddUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\EnterData.xaml.cs">
       <DependentUpon>EnterData.xaml</DependentUpon>
     </Compile>
@@ -113,6 +116,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\AddressDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,6 +1,7 @@
 ﻿using PropertyChanged;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -12,6 +13,8 @@ namespace CompanyMVVM
     [AddINotifyPropertyChangedInterface]
     public class ViewModelBase : INotifyPropertyChanged
     {
+        public static ObservableCollection<Company> Companies { get; set; }
+        
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName]string propertyName = "")
         {

@@ -24,21 +24,8 @@ namespace CompanyMVVM
         public EnterData()
         {
             InitializeComponent();
-
-            DataContext = new CompanyViewModel();
-           
-         
+            DataContext = new EnterDataViewModel();
         }
-
-        //public EnterData()
-        //{
-
-        //}
-        //public EnterData(Company company)
-        //{           
-        //    InitializeComponent();
-        //    this._company = company;
-        //    DataContext = new CompanyViewModel(_company);         
-        //}    
+   
     }
 }

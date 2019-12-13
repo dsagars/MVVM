@@ -1,17 +1,14 @@
-﻿<Window x:Class="CompanyMVVM.EnterData"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CompanyMVVM" 
-        xmlns:h ="clr-namespace:CompanyMVVM"
-        mc:Ignorable="d"  
-         Height="450" Width="800" >
-    <Window.Resources>
-        <local:EnterDataViewModel x:Key="EnterDataViewModel"/>
-    </Window.Resources>
-    <h:AddUserControl/>
-    <!--<Grid HorizontalAlignment="Right" Width="794" Background="White" Margin="-2,4,0,0" DataContext="{Binding}">
+﻿<UserControl x:Class="CompanyMVVM.AddUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CompanyMVVM"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="AddUserControlName"
+             DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Grid HorizontalAlignment="Right" Width="794" Background="White" Margin="-2,4,0,0" DataContext="{Binding}">
         <Grid DataContext="{Binding SelectedItemOnControl, NotifyOnSourceUpdated=True}" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -35,15 +32,15 @@
                     <Setter Property="Background" Value="SkyBlue"/>
                 </Style>
             </Grid.Resources>
-            
+
             <Label Content="Id" Grid.Row="0" Grid.Column="0" FontSize="15" FontWeight="Bold"/>
             <Label Content="Company Name" Grid.Row="0" Grid.Column="1" FontSize="15" FontWeight="Bold"/>
             <Label Content="Main Company" Grid.Row="0" Grid.Column="2" FontSize="15" FontWeight="Bold"/>
             <Label Content="Cars" Grid.Row="0" Grid.Column="3" FontSize="15" FontWeight="Bold"/>
             <Label Content="Address" Grid.Row="0" Grid.Column="4" FontSize="15" FontWeight="Bold"/>
 
-            <TextBox  Name="iDAddOrEditTxtBox" Text="{Binding Id , UpdateSourceTrigger=PropertyChanged}" Margin="10,10,46,341" Grid.Row="1" Grid.Column="0" />
-            <TextBox  Name="companyNameAddOrEditTxtBox" Text="{Binding CompanyName , UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,341" Grid.Row="1" Grid.Column="1" />
+            <TextBox  Name="iDAddOrEditTxtBox" Text="{Binding Id, ElementName=AddUserControlName, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,46,341" Grid.Row="1" Grid.Column="0" />
+            <TextBox  Name="companyNameAddOrEditTxtBox" Text="{Binding CompanyName, ElementName=AddUserControlName, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,341" Grid.Row="1" Grid.Column="1" />
             <CheckBox x:Name="isMainCompanyAddOrEditCheckBox" Content="{Binding IsMainCompany, UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding IsMainCompany}"  Grid.ColumnSpan="2" Grid.Column="2" Margin="14,18,184,333" Grid.Row="1" />
             <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Vertical" Height="Auto" Width="Auto" >
                 <Label Content="Street :"/>
@@ -67,9 +64,8 @@
             </StackPanel>
         </Grid>
         <Button x:Name="closeButton" Content="Close" Margin="267,342,434,11"  />
-        <Button x:Name="saveButton" Content="Save" Grid.Column="0" Margin="149,343,563,10" Command="{Binding AddSaveCommand}"/>
+        <Button x:Name="saveButton" Content="Save" Grid.Column="0" Margin="149,343,563,10" Command="{Binding AddSaveCommand , ElementName=AddUserControlName}" CommandParameter="{Binding}"/>
         <Button x:Name="clearButton" Content="Clear" Margin="20,344,683,9" />
 
-    </Grid>-->
-
-</Window>
+    </Grid>
+</UserControl>

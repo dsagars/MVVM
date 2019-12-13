@@ -25,9 +25,7 @@ namespace CompanyMVVM
         public MainWindow()
         {
             var viewModel = new CompanyViewModel();            
-            EnterData enterData = new EnterData();
-            
-            
+            EnterData enterData = new EnterData();       
             InitializeComponent();
             enterData.DataContext = this.DataContext;
             DataContext = viewModel;
@@ -38,14 +36,14 @@ namespace CompanyMVVM
         {        
             CompanyViewModel vm = this.DataContext as CompanyViewModel;
             vm.DoubleClickCommand.Execute(this.DataContext);
-            vm.CompanyAddedEvent += ItemAddedEventHandler;
+            //vm.CompanyAddedEvent += ItemAddedEventHandler;
         }
 
-        public void ItemAddedEventHandler(object sender, CompanyAddedEventHandler e)
-        {
-            (this.DataContext as CompanyViewModel).Companies.Add(e.newCompany);
-            (this.DataContext as CompanyViewModel).Companies.CollectionChanged += OnContentChanged;
-        }
+        //public void ItemAddedEventHandler(object sender, CompanyAddedEventHandler e)
+        //{
+        //    (this.DataContext as CompanyViewModel).Companies.Add(e.newCompany);
+        //    (this.DataContext as CompanyViewModel).Companies.CollectionChanged += OnContentChanged;
+        //}
     }
     
 }
